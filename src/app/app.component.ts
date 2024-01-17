@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from './_services/auth.service';
+import { User } from './_models/user';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  user?: User | null;
   title = 'ng-ios';
+
+  constructor(private authService: AuthService) {
+    this.authService.user.subscribe(x => this.user = x);
+  }
+
+  logout() {
+      this.authService.logout();
+  }
 }

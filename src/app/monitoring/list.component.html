@@ -1,0 +1,26 @@
+<h1>Services</h1>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Reload</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 30%">Название</th>
+            <th style="width: 30%">Контракт</th>
+            <th style="width: 30%">Статус</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of data">
+            <td>{{item.name}}</td>
+            <td>{{item.status}}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="edit/{{item.id}}" class="btn btn-sm btn-primary me-1">Edit</a>
+            </td>
+        </tr>
+        <tr *ngIf="!data">
+            <td colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
