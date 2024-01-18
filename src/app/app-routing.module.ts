@@ -8,8 +8,8 @@ const authModule = () => import('./auth/auth.module').then(x => x.AuthModule);
 const monitoringModule = () => import('./monitoring/monitoring.module').then(x => x.UsersModule);
 
 const routes: Routes = [
-    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-    { path: 'monitoring', loadChildren: monitoringModule, canActivate: [AuthGuard] },
+    { path: '', loadChildren: monitoringModule, canActivate: [AuthGuard] },
+    // { path: 'monitoring', loadChildren: monitoringModule, canActivate: [AuthGuard] },
     { path: 'auth', loadChildren: authModule },
 
     // otherwise redirect to home

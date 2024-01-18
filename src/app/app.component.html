@@ -1,17 +1,9 @@
 <tui-root>
-    <nav class="navbar navbar-expand navbar-dark bg-dark px-3" *ngIf="user">
-        <div class="navbar-nav">
-            <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-            &nbsp;
-            <a class="nav-item nav-link" routerLink="/monitoring" routerLinkActive="active">Services</a>
-            &nbsp;
-            <button class="btn btn-link nav-item nav-link" (click)="logout()">Logout</button>
-        </div>
-    </nav>
+    <!-- nav *ngIf="user">
+        <button class="btn btn-link nav-item nav-link" (click)="logout()">Log out</button>
+    </nav-->
     
-    <!-- main app container -->
     <div class="app-container" [ngClass]="{ 'bg-light': user }">
         <router-outlet></router-outlet>
     </div>
-
 </tui-root>

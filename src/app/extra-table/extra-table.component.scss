@@ -1,3 +1,8 @@
+$active: #94c170;
+$notUsed: #475d75;
+$archived: #ccc;
+$draft: #1751d0;
+
 .extra-table {
     margin: 0;
     box-shadow: 0 5px 10px -9px rgba(0,0,0,.25);
@@ -17,11 +22,12 @@
     &__header {
         display: flex;
         flex-direction: column;
-        border: 1px solid #ccc;
         border-top: 0 none;
         min-height: 40px;
         border-radius: 0px;
         background-color: #fff;
+        border: 1px solid #ccc;
+        border-left: 4px solid transparent;
 
         &:hover {
             background-color: rgba(#fff, .8);
@@ -31,7 +37,24 @@
             position: sticky;
             top: 0;
             border-radius: 4px 4px 0 0;
-            background-color: #fff;
+            background-color: #fff !important;
+        }
+
+        &--status {
+            &_ACTIVE {
+                border-left: 1px solid #ccc;
+                padding-left: 3px;
+            }
+            &_NOT_IN_USAGE {
+                border-left-color: $notUsed;
+                color: rgba($notUsed, .5);
+            }
+            &_ARCHIVED {
+                border-left-color: $archived;
+            }
+            &_DRAFT {
+                border-left-color: $draft;
+            }
         }
     }
     &__body {
@@ -43,6 +66,8 @@
 
     &__row {
         display: flex;
+        justify-content: center;
+        align-items: center;
         flex-grow: 1;
     }
 
@@ -53,17 +78,18 @@
         &--main {
             flex-grow: 1;
             padding-left: 8px;
-            padding-right: 8px;
+            padding-right: 16px;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         &--status {
-            width: 60px;
             flex-shrink: 0;
         }
     }
 
     &__actions {
         position: relative;
-        width: 40px;
+        width: 28px;
         flex-shrink: 0;
         flex-grow: 0;
 
@@ -72,22 +98,17 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 8px;
-            height: 8px;
-            border: 1px solid #ccc;
+            width: 6px;
+            height: 6px;
+            border: 1px solid $notUsed;
             border-top: 0 none;
             border-left: 0 none;
             transform: rotate(45deg);
-            margin: -6px 0 0 -4px;
+            margin: -4px 0 0 -4px;
             transition: all .1s ease;
         }
     }
 }
-
-$active: #94c170;
-$notUsed: #ccc;
-$archived: #444;
-$draft: #f2a44e;
 
 .status {
     display: inline-block;
@@ -99,13 +120,13 @@ $draft: #f2a44e;
     cursor: default;
     user-select: none;
 
-    &--ACTIVE {
+    &--BLACK {
         color: #fff;
-        background-color: $active;
+        background-color: $notUsed;
     }
-    &--NOT_IN_USAGE {
-        color: #999;
-        background-color: rgba($notUsed, .4);
+    &--BLUE {
+        color: #fff;
+        background-color: $draft;
     }
     &--ARCHIVED {
         color: #fff;

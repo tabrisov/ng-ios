@@ -25,25 +25,14 @@ export class MonitoringService {
     }
 
     getAll(postOptions: any = {}) {
-        const defaults = {
-            limit: 25,
-            offset: 10,
-            filters: {
-                "serviceStatusKey":[],
-                "_status":[],
-                "inContract":[],
-                "period":[],
-                "type":[]
-            }
-        };
         return this.http.post<any>(
-            `${environment.apiUrl}/engine/api/v1/services/?limit=20`, 
+            `${environment.apiUrl}/engine/api/v1/services/?limit=16`, 
             {...postOptions}
         );
     }
-    loadMore(start = 0) {
+    loadMore(start = 0, limit = 16) {
         return this.http.post<any>(
-            `${environment.apiUrl}/engine/api/v1/services/?limit=20&offset=${start}`, {}
+            `${environment.apiUrl}/engine/api/v1/services/?limit=${limit}&offset=${start}`, {}
         );
     }
 }

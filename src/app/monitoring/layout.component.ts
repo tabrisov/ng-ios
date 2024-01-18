@@ -2,6 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
     templateUrl: 'layout.component.html',
-    styles: ['.layout { background-color: #f5f6f7; min-height: 100vh; }']
+    styles: ['.layout { min-height: 100vh; padding: 8px; }']
 })
 export class LayoutComponent { }

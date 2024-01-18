@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { statusNames } from '@app/_models/status.constants';
+import { serviceStatusNames } from '@app/_models/service-status.constants';
 
 @Component({
   selector: 'app-extra-table',
@@ -11,6 +12,7 @@ export class ExtraTableComponent implements OnInit {
 
   isOpened = false;
   statuses = statusNames;
+  serviceStatuses = serviceStatusNames;
 
   constructor() { }
 
@@ -23,6 +25,11 @@ export class ExtraTableComponent implements OnInit {
   get statusName() {
     type status = 'ACTIVE' | 'NOT_IN_USAGE' | 'ARCHIVED' | 'DRAFT';
     return this.statuses[this.item.status as status];
+  }
+  
+  get serviceStatusName() {
+    type status = 'GREEN' | 'YELLOW' | 'BLACK' | 'RED' | 'BLUE' | 'OUT_OF_SERVICE';
+    return this.serviceStatuses[this.item.currentStatus as status];
   }
 
 }

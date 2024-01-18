@@ -1,4 +1,44 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 12px;
+    color: #475d75;
 
-.list {
-    padding: 8px;
+    &__title {
+        flex-grow: 1;
+        margin: 0;
+        font-size: 22px;
+    }
+    &__btn {
+        display: flex;
+        flex-shrink: 0;
+
+        .btn:not(:last-child) {
+            margin-right: 4px;
+        }
+    }
+}
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    color: #475d75;
+    font-weight: bold;
+
+    &--more {
+        flex-direction: row;
+        width: auto;
+        margin: 12px auto;
+        padding: 0 16px;
+        font-size: 15px;
+    }
+    &__text {
+        margin-right: 8px;
+    }
 }

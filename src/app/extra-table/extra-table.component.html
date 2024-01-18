@@ -1,6 +1,7 @@
 <div class="extra-table" [class.extra-table--opened]="isOpened">
     <div class="extra-table__header"
         [class.extra-table__header--opened]="isOpened"
+        [ngClass]="item.status ? 'extra-table__header--status_' + item.status : ''"
         (click)="open()"
     >
         <div class="extra-table__row">
@@ -10,9 +11,9 @@
             <div class="extra-table__elem extra-table__elem--status">
                 <span
                     class="status"
-                    [ngClass]="item.status ? 'status--' + item.status : ''"
+                    [ngClass]="item.currentStatus ? 'status--' + item.currentStatus : ''"
                 >
-                    {{ statusName }}
+                    {{ serviceStatusName }}
                 </span>
             </div>
             <div class="extra-table__actions"></div>
