@@ -6,6 +6,7 @@ import { MonitoringRoutingModule } from './monitoring-routing.module';
 import { LayoutComponent } from './layout.component';
 import { ListComponent } from './list.component';
 import { AddEditComponent } from './add-edit.component';
+import { ExtraTableComponent } from '@app/extra-table/extra-table.component';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { AddEditComponent } from './add-edit.component';
     declarations: [
         LayoutComponent,
         ListComponent,
-        AddEditComponent
+        AddEditComponent,
+        ExtraTableComponent
     ]
 })
 export class UsersModule { }

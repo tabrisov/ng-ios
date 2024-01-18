@@ -1,0 +1,130 @@
+.extra-table {
+    margin: 0;
+    box-shadow: 0 5px 10px -9px rgba(0,0,0,.25);
+    transition: margin .1s ease;
+
+    &--opened {
+        background: #fff;
+        margin-top: 8px;
+        margin-bottom: 12px;
+
+        .extra-table__actions::after {
+            transform: rotate(225deg);
+            margin-top: -1px;
+        }
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #ccc;
+        border-top: 0 none;
+        min-height: 40px;
+        border-radius: 0px;
+        background-color: #fff;
+
+        &:hover {
+            background-color: rgba(#fff, .8);
+        }
+
+        &--opened {
+            position: sticky;
+            top: 0;
+            border-radius: 4px 4px 0 0;
+            background-color: #fff;
+        }
+    }
+    &__body {
+        padding: 8px 16px;
+        border: 1px solid #ccc;
+        border-top: 0;
+        border-radius: 0 0 4px 4px;
+    }
+
+    &__row {
+        display: flex;
+        flex-grow: 1;
+    }
+
+    &__elem {
+        padding-top: 8px;
+        padding-bottom: 8px;
+
+        &--main {
+            flex-grow: 1;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+        &--status {
+            width: 60px;
+            flex-shrink: 0;
+        }
+    }
+
+    &__actions {
+        position: relative;
+        width: 40px;
+        flex-shrink: 0;
+        flex-grow: 0;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            border: 1px solid #ccc;
+            border-top: 0 none;
+            border-left: 0 none;
+            transform: rotate(45deg);
+            margin: -6px 0 0 -4px;
+            transition: all .1s ease;
+        }
+    }
+}
+
+$active: #94c170;
+$notUsed: #ccc;
+$archived: #444;
+$draft: #f2a44e;
+
+.status {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 6px;
+    font-weight: normal;
+    border-radius: 4px;
+    color: #fff;
+    cursor: default;
+    user-select: none;
+
+    &--ACTIVE {
+        color: #fff;
+        background-color: $active;
+    }
+    &--NOT_IN_USAGE {
+        color: #999;
+        background-color: rgba($notUsed, .4);
+    }
+    &--ARCHIVED {
+        color: #fff;
+        background-color: $archived;
+    }
+    &--DRAFT {
+        color: #fff;
+        background-color: $draft;
+    }
+}
+.param {
+    display: flex;
+    margin-top: 0;
+    margin-bottom: 4px;
+
+    &__key {
+        width: 40%;
+    }
+    &__value {
+        width: 60%
+    }
+}

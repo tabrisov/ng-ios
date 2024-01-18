@@ -9,13 +9,11 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { JwtInterceptor } from "src/_helpers/jwt.interceptor";
 import { ErrorInterceptor } from "src/_helpers/error.interceptor";
-import { ExtraTableComponent } from './extra-table/extra-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ExtraTableComponent
   ],
     imports: [
         BrowserModule,
