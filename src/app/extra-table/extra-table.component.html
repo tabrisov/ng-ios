@@ -30,11 +30,11 @@
         </p>
         <p class="param">
             <span class="param__key">Дата создания:</span>
-            <span class="param__value">{{ item.creationDate }}</span>
+            <span class="param__value">{{ item.creationDate | date:'dd.MM.yyyy' }}</span>
         </p>
         <p class="param">
             <span class="param__key">Дата изменения:</span>
-            <span class="param__value">{{ item.updateDate }}</span>
+            <span class="param__value">{{ item.updateDate | date:'dd.MM.yyyy' }}</span>
         </p>
         <p class="param">
             <span class="param__key">Контракты:</span>
@@ -44,9 +44,9 @@
             <span class="param__key">Тип:</span>
             <span class="param__value">{{ item.type }} </span>
         </p>
-        <p class="param" *ngIf="item.probes">
+        <p class="param" *ngIf="item.probes && item.probes.length > 0">
             <span class="param__key">Зонд:</span>
-            <span class="param__value">{{ item.probes.name }}</span>
+            <span class="param__value">{{ item.probes[0].name }}</span>
         </p>
         <p class="param">
             <span class="param__key">Владелец:</span>
@@ -68,7 +68,7 @@
             <span class="param__key">Описание:</span>
             <span class="param__value">{{ item.description }}</span>
         </p>
-        <p class="param" *ngIf="item.tests">
+        <p class="param" *ngIf="item.tests && item.tests.length > 0">
             <span class="param__key">Тест:</span>
             <span class="param__value">{{ item.tests[0].name }}</span>
         </p>
