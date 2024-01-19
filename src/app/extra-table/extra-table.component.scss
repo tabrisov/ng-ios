@@ -120,21 +120,29 @@ $draft: #1751d0;
     cursor: default;
     user-select: none;
 
+    &--GREEN {
+        color: #fff;
+        background-color: #33bb7b;
+    }
+    &--YELLOW {
+        color: #993300;
+        background-color: #ffc500;
+    }
     &--BLACK {
         color: #fff;
         background-color: $notUsed;
+    }
+    &--RED {
+        color: #fff;
+        background-color: #e44a3a;
     }
     &--BLUE {
         color: #fff;
         background-color: $draft;
     }
-    &--ARCHIVED {
+    &--OUT_OF_SERVICE {
         color: #fff;
-        background-color: $archived;
-    }
-    &--DRAFT {
-        color: #fff;
-        background-color: $draft;
+        background-color: #8577d9;
     }
 }
 .param {

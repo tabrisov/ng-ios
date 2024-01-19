@@ -11,7 +11,8 @@ export const serviceStatusNames: { [k in serviceStatusEnum]: string } = {
     [serviceStatusEnum.GREEN]: 'Норма',
     [serviceStatusEnum.YELLOW]: 'Деградация',
     [serviceStatusEnum.RED]: 'Отказ',
-    [serviceStatusEnum.BLUE]: 'Профилактика',
-    [serviceStatusEnum.BLACK]: 'Недоступен',
-    [serviceStatusEnum.OUT_OF_SERVICE]: 'Не работает',
+    [serviceStatusEnum.BLUE]: 'Плановые работы',
+    [serviceStatusEnum.BLACK]: 'Не определено',
+    [serviceStatusEnum.OUT_OF_SERVICE]: 'Не обслуживается',
 }
+

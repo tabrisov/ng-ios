@@ -68,3 +68,24 @@
         transform: rotate(360deg);
     }
 } 
+.list-header {
+    width: 100%;
+    display: flex;
+    margin-bottom: 6px;
+
+    &__title {
+        height: 30px;
+        line-height: 30px;
+        flex-grow: 1;
+        font-size: 13px;
+        font-weight: bold;
+        color: #475d75;
+        cursor: pointer;
+
+        &--aux {
+            width: 125px;
+            flex-shrink: 0;
+            flex-grow: 0;
+        }
+    }
+}

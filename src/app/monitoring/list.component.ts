@@ -15,6 +15,10 @@ export class ListComponent implements OnInit {
     data: any[] = [];
     isLoading = false;
     isRefreshing = false;
+    sortDirection: { [k in 'name' | 'currentStatus']: 'ASC' | 'DESC' } = {
+        'name': 'ASC',
+        'currentStatus': 'ASC'
+    }
 
     constructor(
         private monitoringService: MonitoringService,
@@ -62,5 +66,19 @@ export class ListComponent implements OnInit {
 
     logout() {
         this.authService.logout();
+    }
+
+    sortList(key: 'name' | 'currentStatus') {
+        this.sortDirection[key] = (this.sortDirection[key] === 'DESC') ? 'ASC' : 'DESC';
+        const order = this.sortDirection[key];
+        console.log('sort', key, order)
+
+        this.data.sort(
+            (a, b) => (this.sortDirection[key] === 'ASC')
+                ? b[key] > a[key]
+                    ? 1 : -1
+                : a[key] > b[key]
+                    ? 1 : -1
+        );
     }
 }

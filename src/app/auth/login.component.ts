@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.form = this.formBuilder.group({
+            server: ['http://localhost:8080', Validators.required],
             username: ['', Validators.required],
             password: ['', Validators.required]
         });
@@ -38,6 +39,8 @@ export class LoginComponent implements OnInit {
         if (this.form.invalid) {
             return;
         }
+
+        this.authService.setApiURL(this.f['server'].value);
 
         this.loading = true;
         this.authService.login(this.f['username'].value, this.f['password'].value)

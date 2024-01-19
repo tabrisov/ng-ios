@@ -24,6 +24,10 @@ export class AuthService {
         return this.userSubject.value;
     }
 
+    setApiURL(url: string) {
+        environment.apiUrl = url;
+    }
+
     login(username: string, password: string) {
         const wislaOptions = {
             headers: new HttpHeaders({ "X-Requested-With": "XMLHttpRequest" })

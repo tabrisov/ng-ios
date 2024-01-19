@@ -8,6 +8,18 @@
                 <div class="form-control-holder">
                     <input
                         type="text"
+                        formControlName="server"
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f['server'].errors }"
+                        placeholder="Сервер"
+                    />
+                    <div *ngIf="submitted && f['server'].errors" class="invalid-feedback">
+                        <div *ngIf="f['server'].errors['required']">Обязательное поле</div>
+                    </div>
+                </div>
+                <div class="form-control-holder">
+                    <input
+                        type="text"
                         formControlName="username"
                         class="form-control"
                         [ngClass]="{ 'is-invalid': submitted && f['username'].errors }"

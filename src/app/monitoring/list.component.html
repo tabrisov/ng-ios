@@ -11,6 +11,10 @@
 </header>
 
 <section class="list" *ngIf="data.length > 0">
+    <div class="list-header">
+        <div class="list-header__title" (click)="sortList('name')">Название</div>
+        <div class="list-header__title list-header__title--aux" (click)="sortList('currentStatus')">Статус</div>
+    </div>
     <app-extra-table *ngFor="let item of data" [item]="item"></app-extra-table>
     <div *ngIf="!data">
         <span class="spinner-border spinner-border-lg align-center"></span>
