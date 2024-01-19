@@ -70,8 +70,6 @@ export class ListComponent implements OnInit {
 
     sortList(key: 'name' | 'currentStatus') {
         this.sortDirection[key] = (this.sortDirection[key] === 'DESC') ? 'ASC' : 'DESC';
-        const order = this.sortDirection[key];
-        console.log('sort', key, order)
 
         this.data.sort(
             (a, b) => (this.sortDirection[key] === 'ASC')
