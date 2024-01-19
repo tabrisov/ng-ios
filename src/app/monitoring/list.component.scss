@@ -41,4 +41,30 @@
     &__text {
         margin-right: 8px;
     }
+    &.is-loading {
+        pointer-events: none;
+        color: rgba(#475d75, .5);
+        svg {
+            animation: rotation 1s linear infinite;
+        }
+    }
 }
+.spinner {
+    display: block;
+    width: 48px;
+    height: 48px;
+    margin: 20px auto 0;
+    border: 5px solid #475d75;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 

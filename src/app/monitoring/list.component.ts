@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { first } from 'rxjs/operators';
+import { first, tap } from 'rxjs/operators';
 
 import { MonitoringService } from '@app/_services/monitoring.service';
 import { AuthService } from '@app/_services/auth.service';
@@ -13,6 +13,8 @@ export class ListComponent implements OnInit {
     limit: number = 15;
     total: number = 0;
     data: any[] = [];
+    isLoading = false;
+    isRefreshing = false;
 
     constructor(
         private monitoringService: MonitoringService,
@@ -21,25 +23,41 @@ export class ListComponent implements OnInit {
 
     ngOnInit() {
         this.monitoringService.getAll()
-            .pipe(first())
+            .pipe(
+                first(),
+                tap(() => this.isLoading = true)
+            )
             .subscribe((res:any) => {
                 this.data = res.list;
                 this.total = res.size;
                 this.start = this.limit;
+                this.isLoading = false;
             });
     }
 
     loadMore() {
-        this.monitoringService.loadMore(this.start).subscribe((res) => {
-            this.data = [...this.data!, ...res.list];
-            this.start += this.limit;
-        })
+        this.isLoading = true;
+        this.monitoringService.loadMore(this.start)
+            .subscribe({
+                next: (res) => {
+                    this.data = [...this.data!, ...res.list];
+                    this.start += this.limit;
+                    this.isLoading = false;
+                },
+                error: (e) => this.isLoading = false
+            });
     }
 
     refresh() {
-        this.monitoringService.loadMore(0, this.data.length).subscribe((res) => {
-            this.data = res.list;
-        })
+        this.isRefreshing = true;
+        this.monitoringService.loadMore(0, this.data.length)
+            .subscribe({
+                next: (res) => {
+                    this.data = res.list;
+                    this.isRefreshing = false;
+                },
+                error: (e) => this.isRefreshing = false
+            });
     }
 
     logout() {

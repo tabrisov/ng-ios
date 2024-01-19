@@ -146,6 +146,7 @@ $draft: #1751d0;
         width: 40%;
     }
     &__value {
-        width: 60%
+        width: 60%;
+        word-break: break-word;
     }
 }

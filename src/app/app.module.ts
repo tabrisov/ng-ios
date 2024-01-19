@@ -1,5 +1,3 @@
-import { TuiRootModule, TuiDialogModule, TuiAlertModule } from "@taiga-ui/core";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -20,10 +18,6 @@ import { ErrorInterceptor } from "src/_helpers/error.interceptor";
         ReactiveFormsModule,
         HttpClientModule,
         AppRoutingModule,
-        BrowserAnimationsModule, // Required by Taiga UI
-        TuiRootModule, // Has to go after BrowserAnimationsModule
-        TuiDialogModule,
-        TuiAlertModule
       ],
     
     providers: [

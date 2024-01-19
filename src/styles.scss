@@ -2,8 +2,17 @@
 * {
     box-sizing: border-box;
 }
+@font-face {
+    font-family: 'Roboto';
+    src: url('assets/fonts/roboto-regular.woff2') format('woff2'),
+         url('assets/fonts/roboto-regular.woff') format('woff')
+         url('assets/fonts/roboto-regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 body {
     background-color: #f3f4f5 !important;
     min-height: 100vh;
     background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+    font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, 'Roboto', noto, arial, sans-serif;
 }

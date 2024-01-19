@@ -6,7 +6,7 @@
     >
         <div class="extra-table__row">
             <div class="extra-table__elem extra-table__elem--main">
-                <b class="extra-table__title">{{ item.name }}</b>
+                <span class="extra-table__title">{{ item.name }}</span>
             </div>
             <div class="extra-table__elem extra-table__elem--status">
                 <span
@@ -27,6 +27,17 @@
         <p class="param">
             <span class="param__key">Название:</span>
             <span class="param__value">{{ item.name }}</span>
+        </p>
+        <p class="param">
+            <span class="param__key">Статус сервиса:</span>
+            <span class="param__value" *ngIf="item.status === 'ACTIVE'">Активный</span>
+            <span class="param__value" *ngIf="item.status === 'NOT_IN_USAGE'">Не используется</span>
+            <span class="param__value" *ngIf="item.status === 'DRAFT'">Черновик</span>
+            <span class="param__value" *ngIf="item.status === 'ARCHIVED'">Архивный</span>
+        </p>
+        <p class="param">
+            <span class="param__key">Состояние:</span>
+            <span class="param__value">{{ serviceStatusName }}</span>
         </p>
         <p class="param">
             <span class="param__key">Дата создания:</span>
