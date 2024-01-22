@@ -19,6 +19,8 @@ export class ListComponent implements OnInit {
         'name': 'ASC',
         'currentStatus': 'ASC'
     }
+    isError = true;
+    errorMsg = 'Ошибка';
 
     constructor(
         private monitoringService: MonitoringService,
@@ -31,11 +33,18 @@ export class ListComponent implements OnInit {
                 first(),
                 tap(() => this.isLoading = true)
             )
-            .subscribe((res:any) => {
-                this.data = res.list;
-                this.total = res.size;
-                this.start = this.limit;
-                this.isLoading = false;
+            .subscribe({
+                next: (res: any) => {
+                    this.data = res.list;
+                    this.total = res.size;
+                    this.start = this.limit;
+                    this.isLoading = false;
+                },
+                error: error => {
+                    console.error(error);
+                    this.isError = true;
+                    this.errorMsg = JSON.stringify(error);;
+                }
             });
     }
 

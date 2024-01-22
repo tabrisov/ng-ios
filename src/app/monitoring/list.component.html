@@ -9,6 +9,8 @@
         </button>
     </div>
 </header>
+<div *ngIf="isError" class="error-block">{{ errorMsg }}</div>
+
 
 <section class="list" *ngIf="data.length > 0">
     <div class="list-header">

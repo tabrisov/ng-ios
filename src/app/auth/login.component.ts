@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit {
     form!: FormGroup;
     loading = false;
     submitted = false;
+    isError = false;
+    errorMsg = '';
 
     constructor(
         private formBuilder: FormBuilder,
@@ -54,6 +56,8 @@ export class LoginComponent implements OnInit {
                 error: error => {
                     console.error(error);
                     this.loading = false;
+                    this.isError = true;
+                    this.errorMsg = JSON.stringify(error);;
                 }
             });
     }
