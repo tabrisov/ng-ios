@@ -19,8 +19,8 @@ export class ListComponent implements OnInit {
         'name': 'ASC',
         'currentStatus': 'ASC'
     }
-    isError = true;
-    errorMsg = 'Ошибка';
+    isError = false;
+    errorMsg = '';
 
     constructor(
         private monitoringService: MonitoringService,
