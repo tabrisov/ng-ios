@@ -3,6 +3,7 @@ import { first, tap } from 'rxjs/operators';
 
 import { MonitoringService } from '@app/_services/monitoring.service';
 import { AuthService } from '@app/_services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     templateUrl: 'list.component.html',
@@ -20,7 +21,9 @@ export class ListComponent implements OnInit {
         'currentStatus': 'ASC'
     }
     isError = false;
+    isErrorTextCollapsed = true;
     errorMsg = '';
+    fullError = '';
 
     constructor(
         private monitoringService: MonitoringService,
@@ -40,11 +43,7 @@ export class ListComponent implements OnInit {
                     this.start = this.limit;
                     this.isLoading = false;
                 },
-                error: error => {
-                    console.error(error);
-                    this.isError = true;
-                    this.errorMsg = JSON.stringify(error);;
-                }
+                error: error => this.handleError(error)
             });
     }
 
@@ -56,8 +55,9 @@ export class ListComponent implements OnInit {
                     this.data = [...this.data!, ...res.list];
                     this.start += this.limit;
                     this.isLoading = false;
+                    this.isError = false;
                 },
-                error: (e) => this.isLoading = false
+                error: error => this.handleError(error)
             });
     }
 
@@ -68,8 +68,9 @@ export class ListComponent implements OnInit {
                 next: (res) => {
                     this.data = res.list;
                     this.isRefreshing = false;
+                    this.isError = false;
                 },
-                error: (e) => this.isRefreshing = false
+                error: error => this.handleError(error)
             });
     }
 
@@ -87,5 +88,12 @@ export class ListComponent implements OnInit {
                 : a[key] > b[key]
                     ? 1 : -1
         );
+    }
+
+    handleError(error: HttpErrorResponse) {
+        this.isError = true;
+        this.errorMsg = error.statusText
+        this.fullError = JSON.stringify(error);
+        this.isLoading = false
     }
 }

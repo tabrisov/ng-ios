@@ -9,7 +9,12 @@
         </button>
     </div>
 </header>
-<div *ngIf="isError" class="error-block">{{ errorMsg }}</div>
+<div *ngIf="isError" class="error-block" (click)="isErrorTextCollapsed = false">
+    <p>{{ errorMsg }}</p>
+    <code *ngIf="!isErrorTextCollapsed">
+        {{ fullError }}
+    </code>
+</div>
 
 
 <section class="list" *ngIf="data.length > 0">

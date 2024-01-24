@@ -14,7 +14,9 @@ export class LoginComponent implements OnInit {
     loading = false;
     submitted = false;
     isError = false;
+    isErrorTextCollapsed = true;
     errorMsg = '';
+    fullError = '';
 
     constructor(
         private formBuilder: FormBuilder,
@@ -25,7 +27,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.form = this.formBuilder.group({
-            server: ['http://localhost:8080', Validators.required],
+            server: ['', Validators.required],
             username: ['', Validators.required],
             password: ['', Validators.required]
         });
@@ -57,7 +59,8 @@ export class LoginComponent implements OnInit {
                     console.error(error);
                     this.loading = false;
                     this.isError = true;
-                    this.errorMsg = JSON.stringify(error);;
+                    this.errorMsg = error.statusText
+                    this.fullError = JSON.stringify(error);
                 }
             });
     }
