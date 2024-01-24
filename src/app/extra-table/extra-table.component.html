@@ -1,0 +1,87 @@
+<div class="extra-table" [class.extra-table--opened]="isOpened">
+    <div class="extra-table__header"
+        [class.extra-table__header--opened]="isOpened"
+        [ngClass]="item.status ? 'extra-table__header--status_' + item.status : ''"
+        (click)="open()"
+    >
+        <div class="extra-table__row">
+            <div class="extra-table__elem extra-table__elem--main">
+                <span class="extra-table__title">{{ item.name }}</span>
+            </div>
+            <div class="extra-table__elem extra-table__elem--status">
+                <span
+                    class="status"
+                    [ngClass]="item.currentStatus ? 'status--' + item.currentStatus : ''"
+                >
+                    {{ serviceStatusName }}
+                </span>
+            </div>
+            <div class="extra-table__actions"></div>
+        </div>
+    </div>
+    <div class="extra-table__body" *ngIf="isOpened">
+        <p class="param">
+            <span class="param__key">ID:</span>
+            <span class="param__value">{{ item.id }}</span>
+        </p>
+        <p class="param">
+            <span class="param__key">Название:</span>
+            <span class="param__value">{{ item.name }}</span>
+        </p>
+        <p class="param">
+            <span class="param__key">Статус сервиса:</span>
+            <span class="param__value" *ngIf="item.status === 'ACTIVE'">Активный</span>
+            <span class="param__value" *ngIf="item.status === 'NOT_IN_USAGE'">Не используется</span>
+            <span class="param__value" *ngIf="item.status === 'DRAFT'">Черновик</span>
+            <span class="param__value" *ngIf="item.status === 'ARCHIVED'">Архивный</span>
+        </p>
+        <p class="param">
+            <span class="param__key">Состояние:</span>
+            <span class="param__value">{{ serviceStatusName }}</span>
+        </p>
+        <p class="param">
+            <span class="param__key">Дата создания:</span>
+            <span class="param__value">{{ item.creationDate | date:'dd.MM.yyyy' }}</span>
+        </p>
+        <p class="param">
+            <span class="param__key">Дата изменения:</span>
+            <span class="param__value">{{ item.updateDate | date:'dd.MM.yyyy' }}</span>
+        </p>
+        <p class="param">
+            <span class="param__key">Контракты:</span>
+            <span class="param__value">{{ item.contractNames }}</span>
+        </p>
+        <p class="param">
+            <span class="param__key">Тип:</span>
+            <span class="param__value">{{ item.type }} </span>
+        </p>
+        <p class="param" *ngIf="item.probes && item.probes.length > 0">
+            <span class="param__key">Зонд:</span>
+            <span class="param__value">{{ item.probes[0].name }}</span>
+        </p>
+        <p class="param">
+            <span class="param__key">Владелец:</span>
+            <span class="param__value">{{ item.ownerName}}</span>
+        </p>
+        <p class="param">
+            <span class="param__key">Расположение:</span>
+            <span class="param__value">{{ item.address }}</span>
+        </p>
+        <p class="param" *ngIf="item.sla">
+            <span class="param__key">SLA:</span>
+            <span class="param__value">{{ item.sla.name }}</span>
+        </p>
+        <p class="param">
+            <span class="param__key">Время доступности:</span>
+            <span class="param__value">{{ item.availabilityTimeName }}</span>
+        </p>
+        <p class="param" *ngIf="item.description">
+            <span class="param__key">Описание:</span>
+            <span class="param__value">{{ item.description }}</span>
+        </p>
+        <p class="param" *ngIf="item.tests && item.tests.length > 0">
+            <span class="param__key">Тест:</span>
+            <span class="param__value">{{ item.tests[0].name }}</span>
+        </p>
+    </div>
+</div>

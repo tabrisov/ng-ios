@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+    box-sizing: border-box;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('assets/fonts/roboto-regular.woff2') format('woff2'),
+         url('assets/fonts/roboto-regular.woff') format('woff')
+         url('assets/fonts/roboto-regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+    margin: 0;
+    min-height: 100dvh;
+    background-color: #f5f7fa;
+    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, 'Roboto', noto, arial, sans-serif;
+}
