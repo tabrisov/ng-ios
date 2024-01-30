@@ -46,14 +46,17 @@ $draft: #1751d0;
                 padding-left: 3px;
             }
             &_NOT_IN_USAGE {
-                border-left-color: $notUsed;
+                border-left: 1px solid #ccc;
+                padding-left: 3px;
                 color: rgba($notUsed, .5);
             }
             &_ARCHIVED {
                 border-left-color: $archived;
             }
             &_DRAFT {
-                border-left-color: $draft;
+                border-left: 1px solid #ccc;
+                padding-left: 3px;
+                color: rgba($notUsed, .5);
             }
         }
     }
@@ -152,8 +155,11 @@ $draft: #1751d0;
 
     &__key {
         width: 40%;
+        word-break: break-word;
+        padding-right: 4px;
     }
     &__value {
+        display: block;
         width: 60%;
         word-break: break-word;
     }

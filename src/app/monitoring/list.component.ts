@@ -11,11 +11,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ListComponent implements OnInit {
     start: number = 0;
-    limit: number = 15;
+    limit: number = 16;
     total: number = 0;
     data: any[] = [];
     isLoading = false;
     isRefreshing = false;
+    sortColumn:'name' | 'currentStatus' | null = null;
     sortDirection: { [k in 'name' | 'currentStatus']: 'ASC' | 'DESC' } = {
         'name': 'ASC',
         'currentStatus': 'ASC'
@@ -56,6 +57,7 @@ export class ListComponent implements OnInit {
                     this.start += this.limit;
                     this.isLoading = false;
                     this.isError = false;
+                    this.sortList(this.sortColumn, true);
                 },
                 error: error => this.handleError(error)
             });
@@ -78,8 +80,12 @@ export class ListComponent implements OnInit {
         this.authService.logout();
     }
 
-    sortList(key: 'name' | 'currentStatus') {
-        this.sortDirection[key] = (this.sortDirection[key] === 'DESC') ? 'ASC' : 'DESC';
+    sortList(key: 'name' | 'currentStatus' | null, keepDirection?:boolean) {
+        if (!key) return;
+        this.sortColumn = key;
+        if (!keepDirection) {
+            this.sortDirection[key] = (this.sortDirection[key] === 'DESC') ? 'ASC' : 'DESC';
+        }
 
         this.data.sort(
             (a, b) => (this.sortDirection[key] === 'ASC')
@@ -92,7 +98,7 @@ export class ListComponent implements OnInit {
 
     handleError(error: HttpErrorResponse) {
         this.isError = true;
-        this.errorMsg = error.statusText
+        this.errorMsg = error?.statusText || 'Unknown error'
         this.fullError = JSON.stringify(error);
         this.isLoading = false
     }

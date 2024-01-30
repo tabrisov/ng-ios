@@ -17,17 +17,22 @@ export class LoginComponent implements OnInit {
     isErrorTextCollapsed = true;
     errorMsg = '';
     fullError = '';
+    isPasswordVisible = false;
 
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private authService: AuthService,
-    ) { }
+    ) {}
 
     ngOnInit() {
+        let apiUrl = localStorage.getItem('server');
+        let server = apiUrl ? JSON.parse(apiUrl) : 'https://';
+        this.authService.setApiURL(server);
+
         this.form = this.formBuilder.group({
-            server: ['', Validators.required],
+            server: [server, [Validators.required, Validators.pattern('(https://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')]],
             username: ['', Validators.required],
             password: ['', Validators.required]
         });
@@ -57,9 +62,24 @@ export class LoginComponent implements OnInit {
                 },
                 error: error => {
                     console.error(error);
+                    if (typeof(error) == 'undefined') {
+                        error = {};
+                        error.status = 0;
+                    }
                     this.loading = false;
                     this.isError = true;
-                    this.errorMsg = error.statusText
+                    switch(error.status) {
+                        case 0:
+                            this.errorMsg = 'Укажите корректный адрес сервера';
+                            break;
+                        case 401:
+                            this.errorMsg = 'Ошибочный адрес эл. почты/пароль или пользователь заблокирован';
+                            break;
+                        default:
+                            this.errorMsg = error.statusText
+                            break;
+                    }
+                    
                     this.fullError = JSON.stringify(error);
                 }
             });

@@ -38,7 +38,15 @@ $red: #d20909;
 
     &-holder {
         margin-bottom: 8px;
+        position: relative;
     }
+}
+.eye-btn {
+    position: absolute;
+    right: 10px;
+    top: 6px;
+    color: #999;
+    cursor: pointer;
 }
 .form-footer {
     padding-top: 12px;
@@ -64,4 +72,5 @@ $red: #d20909;
 }
 .error-block {
     color: red;
+    cursor: pointer;
 }

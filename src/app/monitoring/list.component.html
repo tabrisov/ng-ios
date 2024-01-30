@@ -19,8 +19,18 @@
 
 <section class="list" *ngIf="data.length > 0">
     <div class="list-header">
-        <div class="list-header__title" (click)="sortList('name')">Название</div>
-        <div class="list-header__title list-header__title--aux" (click)="sortList('currentStatus')">Статус</div>
+        <div class="list-header__th">
+            <span class="list-header__title"
+                [ngClass]="{'list-header__title--active': sortColumn === 'name','list-header__title--sort list-header__title--sort_asc': sortColumn === 'name' && sortDirection.name === 'ASC', 'list-header__title--sort list-header__title--sort_desc' : sortColumn === 'name' && sortDirection.name === 'DESC'}"
+                (click)="sortList('name')"
+            >Название</span>
+        </div>
+        <div class="list-header__th list-header__th--aux">
+            <span class="list-header__title"
+                [ngClass]="{'list-header__title--active': sortColumn === 'currentStatus' , 'list-header__title--sort list-header__title--sort_asc': sortColumn === 'currentStatus' && sortDirection.currentStatus === 'ASC','list-header__title--sort list-header__title--sort_desc' : sortColumn === 'currentStatus' && sortDirection.currentStatus === 'DESC'}"
+                (click)="sortList('currentStatus')"
+            >Статус</span>
+        </div>
     </div>
     <app-extra-table *ngFor="let item of data" [item]="item"></app-extra-table>
     <div *ngIf="!data">

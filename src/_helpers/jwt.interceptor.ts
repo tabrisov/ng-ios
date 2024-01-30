@@ -14,10 +14,14 @@ export class JwtInterceptor implements HttpInterceptor {
         const user = this.authService.userValue;
         const isLoggedIn = user && user.token;
         const isApiUrl = request.url.startsWith(environment.apiUrl);
+        const isRefresh = request.url.includes('/engine/api/auth/token/')
+
         if (isLoggedIn && isApiUrl) {
             request = request.clone({
                 setHeaders: {
-                    Authorization: `wi-access_token-${user.token}`
+                    Authorization: isRefresh
+                        ? `wi-refresh_token-${user.refreshToken}`
+                        : `wi-access_token-${user.token}`
                 }
             });
         }

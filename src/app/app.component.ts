@@ -13,6 +13,11 @@ export class AppComponent {
 
   constructor(private authService: AuthService) {
     this.authService.user.subscribe(x => this.user = x);
+
+    let apiUrl = localStorage.getItem('server');
+    if (apiUrl) {
+      this.authService.setApiURL(JSON.parse(apiUrl));  
+    }
   }
 
   logout() {

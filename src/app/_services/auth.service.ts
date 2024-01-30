@@ -26,6 +26,7 @@ export class AuthService {
 
     setApiURL(url: string) {
         environment.apiUrl = url;
+        localStorage.setItem('server', JSON.stringify(url));
     }
 
     login(username: string, password: string) {
@@ -46,6 +47,30 @@ export class AuthService {
         localStorage.removeItem('user');
         this.userSubject.next(null);
         this.router.navigate(['/auth/login']);
+    }
+
+    refreshToken(refreshToken?: string) {
+        if (!refreshToken) {
+            refreshToken = this.userSubject.value?.refreshToken;
+        }
+        const wislaOptions = {
+            headers: new HttpHeaders({
+                "X-Requested-With": "XMLHttpRequest",
+                "Cache-Control": "no-cache",
+                "Content-Type": "application/json"
+            })
+        };
+        return this.http.post(
+            `${environment.apiUrl}/engine/api/auth/token/`, 
+            refreshToken,
+            wislaOptions
+        )
+            .pipe(map(user => {
+                localStorage.setItem('user', JSON.stringify(user));
+                this.userSubject.next(user);
+                return user;
+            }));
+        ;
     }
 
     getById(id: string) {
