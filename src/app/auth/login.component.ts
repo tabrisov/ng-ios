@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthService } from '@app/_services/auth.service';
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
         this.authService.setApiURL(server);
 
         this.form = this.formBuilder.group({
-            server: [server, [Validators.required, Validators.pattern('(https://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?')]],
+            server: [server, [Validators.required, LoginComponent.urlValidator]],
             username: ['', Validators.required],
             password: ['', Validators.required]
         });
@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
                     // get return url from query parameters or default to home page
                     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
                     this.router.navigateByUrl(returnUrl);
+                    this.authService.setCredentials(this.f['username'].value, this.f['password'].value);
                 },
                 error: error => {
                     console.error(error);
@@ -83,5 +84,15 @@ export class LoginComponent implements OnInit {
                     this.fullError = JSON.stringify(error);
                 }
             });
+    }
+    private static urlValidator({value}: AbstractControl): null | ValidationErrors {
+        try {
+           if (value.startsWith('https://')) {
+             return null;
+           }
+           return {pattern: true};
+        } catch {
+           return {pattern: true};
+        }
     }
 }

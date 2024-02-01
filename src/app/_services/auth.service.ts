@@ -29,6 +29,21 @@ export class AuthService {
         localStorage.setItem('server', JSON.stringify(url));
     }
 
+    setCredentials(username: string, password: string) {
+        localStorage.setItem('username', JSON.stringify(username));
+        localStorage.setItem('password', JSON.stringify(password));
+    }
+
+    getCredentials() {
+        const l = localStorage.getItem('username');
+        const p = localStorage.getItem('password');
+
+        return {
+            username: l ? JSON.parse(l) : l,
+            password: p ? JSON.parse(p) : p
+        };
+    }
+
     login(username: string, password: string) {
         const wislaOptions = {
             headers: new HttpHeaders({ "X-Requested-With": "XMLHttpRequest" })
@@ -45,32 +60,10 @@ export class AuthService {
     logout() {
         // remove user from local storage and set current user to null
         localStorage.removeItem('user');
+        localStorage.removeItem('username');
+        localStorage.removeItem('password');
         this.userSubject.next(null);
         this.router.navigate(['/auth/login']);
-    }
-
-    refreshToken(refreshToken?: string) {
-        if (!refreshToken) {
-            refreshToken = this.userSubject.value?.refreshToken;
-        }
-        const wislaOptions = {
-            headers: new HttpHeaders({
-                "X-Requested-With": "XMLHttpRequest",
-                "Cache-Control": "no-cache",
-                "Content-Type": "application/json"
-            })
-        };
-        return this.http.post(
-            `${environment.apiUrl}/engine/api/auth/token/`, 
-            refreshToken,
-            wislaOptions
-        )
-            .pipe(map(user => {
-                localStorage.setItem('user', JSON.stringify(user));
-                this.userSubject.next(user);
-                return user;
-            }));
-        ;
     }
 
     getById(id: string) {

@@ -11,6 +11,11 @@ import { User } from '@app/_models/user';
 export class MonitoringService {
     private userSubject: BehaviorSubject<User | null>;
     public user: Observable<User | null>;
+    public data$: BehaviorSubject<any[] | null> = new BehaviorSubject<any[] | null>(null);
+
+    public isLoading$ = new BehaviorSubject<boolean>(false);
+    public isRefreshing$ = new BehaviorSubject<boolean>(false);
+    public isError$ = new BehaviorSubject<boolean>(false);
 
     constructor(
         private router: Router,
@@ -22,6 +27,16 @@ export class MonitoringService {
 
     public get userValue() {
         return this.userSubject.value;
+    }
+
+    public updateData(data: any[]) {
+        const existing = this.data$.value?.length ? this.data$.value : [];
+        const unique = [...new Set([...existing, ...data])]
+        this.data$.next(unique);
+
+        this.isError$.next(false);
+        this.isRefreshing$.next(false);
+        this.isLoading$.next(false);
     }
 
     getAll(postOptions: any = {}) {

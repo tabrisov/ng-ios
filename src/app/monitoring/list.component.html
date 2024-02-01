@@ -1,7 +1,7 @@
 <header class="header">
     <h1 class="header__title">Состояние сервисов</h1>
     <div class="header__btn">
-        <button class="btn" (click)="refresh()" [class.is-loading]="isRefreshing">
+        <button class="btn" (click)="refresh()" [class.is-loading]="(isRefreshing$ | async) == true">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
         </button>
         <button class="btn" (click)="logout()">
@@ -9,14 +9,14 @@
         </button>
     </div>
 </header>
-<div *ngIf="isError" class="error-block" (click)="isErrorTextCollapsed = false">
+<div *ngIf="(isError$ | async) == true" class="error-block" (click)="isErrorTextCollapsed = false">
     <p>{{ errorMsg }}</p>
     <code *ngIf="!isErrorTextCollapsed">
         {{ fullError }}
     </code>
 </div>
 
-
+<ng-container *ngIf="data$ | async as data">
 <section class="list" *ngIf="data.length > 0">
     <div class="list-header">
         <div class="list-header__th">
@@ -37,10 +37,11 @@
         <span class="spinner-border spinner-border-lg align-center"></span>
     </div>
 </section>
+</ng-container>
 
 <button
     class="btn btn--more"
-    *ngIf="start < total && !isLoading"
+    *ngIf="start < total && !(isLoading$ | async)"
     (click)="loadMore()"
 >
     <span class="btn__text">Загрузить ещё</span>
@@ -49,4 +50,4 @@
     </span>
 </button>
 
-<span class="spinner" *ngIf="data.length === 0 || isLoading"></span>
+<span class="spinner" *ngIf="data.length === 0 || (isLoading$ | async) == true"></span>

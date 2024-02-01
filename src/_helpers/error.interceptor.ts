@@ -1,39 +1,44 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, first, switchMap } from 'rxjs/operators';
 import { AuthService } from '@app/_services/auth.service';
+import { MonitoringService } from '@app/_services/monitoring.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    constructor(private authService: AuthService) {}
+    constructor(private authService: AuthService, private monitoringService: MonitoringService) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         
         return next.handle(request).pipe(catchError(err => {
-          /*
-            if (err.status === 401 && [10, 11].includes(err.error.errorCode)) {
-              const user = this.authService.userValue;
-              console.log('user,', user, err);
-              return this.authService.refreshToken(user!.refreshToken).pipe(
-                switchMap(() => {
-                  const updatedRequest = request.clone({
-                    setHeaders: {
-                      Authorization: `wi-access_token-${user!.token}`,
-                    },
-                  });
-                  return next.handle(updatedRequest);
-                }),
-                catchError(() => {
-                  this.authService.logout();
-                  return throwError('Token refresh failed');
-                })
-              );
-            }
-            */
-
             if ([401, 403].includes(err.status) && this.authService.userValue) {
-                this.authService.logout();
+              const c = this.authService.getCredentials();
+              if (c.username && c.password) {
+                this.authService.login(c.username, c.password)
+                    .pipe(
+                      first(),
+                      switchMap((data) => {
+                        const updatedRequest = request.clone({
+                          setHeaders: {
+                            Authorization: `wi-access_token-${data.token}`,
+                          },
+                        });
+                        return next.handle(updatedRequest);
+                      }),
+                    )
+                    .subscribe({
+                        next: (data : any) => {
+                          if (data?.body?.list) {
+                            this.monitoringService.updateData(data.body.list);
+                          }
+                        },
+                        error: error => {
+                            console.error(error);
+                        }
+                    })
+                  ;
+              }
             }
 
             console.error(err);

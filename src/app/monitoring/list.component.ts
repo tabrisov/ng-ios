@@ -14,14 +14,15 @@ export class ListComponent implements OnInit {
     limit: number = 16;
     total: number = 0;
     data: any[] = [];
-    isLoading = false;
-    isRefreshing = false;
+    data$ = this.monitoringService.data$;
+    isLoading$ = this.monitoringService.isLoading$;
+    isRefreshing$ = this.monitoringService.isRefreshing$;
+    isError$ = this.monitoringService.isError$;
     sortColumn:'name' | 'currentStatus' | null = null;
     sortDirection: { [k in 'name' | 'currentStatus']: 'ASC' | 'DESC' } = {
         'name': 'ASC',
         'currentStatus': 'ASC'
     }
-    isError = false;
     isErrorTextCollapsed = true;
     errorMsg = '';
     fullError = '';
@@ -29,34 +30,37 @@ export class ListComponent implements OnInit {
     constructor(
         private monitoringService: MonitoringService,
         private authService: AuthService
-    ) {}
+    ) {
+    }
 
     ngOnInit() {
         this.monitoringService.getAll()
             .pipe(
                 first(),
-                tap(() => this.isLoading = true)
+                tap(() => this.isLoading$.next(true))
             )
             .subscribe({
                 next: (res: any) => {
                     this.data = res.list;
+                    this.data$.next(this.data);
                     this.total = res.size;
                     this.start = this.limit;
-                    this.isLoading = false;
+                    this.isLoading$.next(false);
                 },
                 error: error => this.handleError(error)
             });
     }
 
     loadMore() {
-        this.isLoading = true;
+        this.isLoading$.next(true);
         this.monitoringService.loadMore(this.start)
             .subscribe({
                 next: (res) => {
                     this.data = [...this.data!, ...res.list];
+                    this.data$.next(this.data);
                     this.start += this.limit;
-                    this.isLoading = false;
-                    this.isError = false;
+                    this.isLoading$.next(false);
+                    this.isError$.next(false);
                     this.sortList(this.sortColumn, true);
                 },
                 error: error => this.handleError(error)
@@ -64,13 +68,14 @@ export class ListComponent implements OnInit {
     }
 
     refresh() {
-        this.isRefreshing = true;
+        this.isRefreshing$.next(true);
         this.monitoringService.loadMore(0, this.data.length)
             .subscribe({
                 next: (res) => {
                     this.data = res.list;
-                    this.isRefreshing = false;
-                    this.isError = false;
+                    this.data$.next(this.data);
+                    this.isRefreshing$.next(false);
+                    this.isError$.next(false);
                 },
                 error: error => this.handleError(error)
             });
@@ -87,19 +92,20 @@ export class ListComponent implements OnInit {
             this.sortDirection[key] = (this.sortDirection[key] === 'DESC') ? 'ASC' : 'DESC';
         }
 
-        this.data.sort(
+        const sorted = this.data.sort(
             (a, b) => (this.sortDirection[key] === 'ASC')
                 ? b[key] > a[key]
                     ? 1 : -1
                 : a[key] > b[key]
                     ? 1 : -1
         );
+        this.data$.next(sorted);
     }
 
     handleError(error: HttpErrorResponse) {
-        this.isError = true;
+        this.isError$.next(true);
         this.errorMsg = error?.statusText || 'Unknown error'
         this.fullError = JSON.stringify(error);
-        this.isLoading = false
+        this.isLoading$.next(false)
     }
 }
